@@ -21,6 +21,7 @@ function calcTime() {
     seconds.value = "00";
     btnStart.setAttribute("disabled", "");
     btnReset.setAttribute("disabled", "");
+    btnStart.classList.toggle("btn-pause");
     return alert("타이머 종료!!");
   }
   const newHours = Math.floor(secTotal / 3600);
@@ -45,7 +46,6 @@ function pauseTimer() {
 
 btnStart.addEventListener("click", () => {
   btnStart.classList.toggle("btn-pause");
-  console.log(btnStart.classList);
   intervalId ? pauseTimer() : startTimer();
 });
 

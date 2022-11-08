@@ -14,6 +14,15 @@ function calcTime() {
 
   const secTotal = valHours * 3600 + valMinutes * 60 + valSeconds - 1;
 
+  if (secTotal === 0) {
+    pauseTimer();
+    hours.value = "00";
+    minutes.value = "00";
+    seconds.value = "00";
+    btnStart.setAttribute("disabled", "");
+    btnReset.setAttribute("disabled", "");
+    return alert("타이머 종료!!");
+  }
   const newHours = Math.floor(secTotal / 3600);
   const newMinutes = Math.floor((secTotal % 3600) / 60);
   const newSeconds = Math.floor((secTotal % 3600) % 60);
@@ -42,6 +51,8 @@ btnStart.addEventListener("click", () => {
 
 timeInputs.forEach((input) => {
   input.addEventListener("change", () => {
+    btnStart.removeAttribute("disabled");
+    btnReset.removeAttribute("disabled");
     const value = parseInt(input.value) || 0;
     input.value = `${value}`.padStart(2, "0");
   });

@@ -1,10 +1,11 @@
 const hours = document.getElementById("hours");
 const minutes = document.getElementById("minutes");
 const seconds = document.getElementById("seconds");
-
 const timeInputs = document.querySelectorAll("input");
 const btnStart = document.querySelector(".btn-start");
 const btnReset = document.querySelector(".btn-reset");
+
+let intervalId;
 
 function calcTime() {
   const valHours = parseInt(hours.value) || 0;
@@ -23,16 +24,24 @@ function calcTime() {
 }
 
 function startTimer() {
-  setInterval(calcTime, 1000);
+  btnStart.textContent = "PAUSE";
+  intervalId = setInterval(calcTime, 1000);
 }
 
-// 시작 버튼을 누르면 타이머 작동
+function pauseTimer() {
+  clearInterval(intervalId);
+  intervalId = null;
+  btnStart.textContent = "START";
+}
+
 btnStart.addEventListener("click", () => {
-  startTimer();
+  btnStart.classList.toggle("btn-pause");
+  console.log(btnStart.classList);
+  intervalId ? pauseTimer() : startTimer();
 });
 
 timeInputs.forEach((input) => {
-  input.addEventListener("change", (event) => {
+  input.addEventListener("change", () => {
     const value = parseInt(input.value) || 0;
     input.value = `${value}`.padStart(2, "0");
   });

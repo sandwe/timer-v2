@@ -14,7 +14,7 @@ function calcTime() {
 
   const secTotal = valHours * 3600 + valMinutes * 60 + valSeconds - 1;
 
-  if (secTotal === 0) {
+  if (secTotal === -1) {
     pauseTimer();
     hours.value = "00";
     minutes.value = "00";
@@ -47,6 +47,16 @@ function pauseTimer() {
 btnStart.addEventListener("click", () => {
   btnStart.classList.toggle("btn-pause");
   intervalId ? pauseTimer() : startTimer();
+});
+
+btnReset.addEventListener("click", () => {
+  clearInterval(intervalId);
+  intervalId = null;
+  pauseTimer();
+  hours.value = minutes.value = seconds.value = "00";
+  btnStart.classList.toggle("btn-pause");
+  btnStart.setAttribute("disabled", "");
+  btnReset.setAttribute("disabled", "");
 });
 
 timeInputs.forEach((input) => {
